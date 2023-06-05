@@ -7,5 +7,5 @@ class ListingStateMapper @Inject constructor() :
     StateMapper<ListingScreenContract.DomainState, ListingScreenContract.UIState> {
 
     override fun mapState(domainState: ListingScreenContract.DomainState) =
-        ListingScreenContract.UIState(domainState.title)
+        ListingScreenContract.UIState(domainState.title, domainState.newsList)
 }

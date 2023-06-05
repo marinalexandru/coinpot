@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.listing
 
+import com.example.myapplication.data.models.News
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.ScreenModel
 import com.revolut.kompot.navigable.screen.ScreenStates
@@ -12,9 +13,13 @@ class ListingScreenContract {
     data class InputData(val title: String) : IOData.Input
 
     data class DomainState(
-        val title: String
+        val title: String,
+        val newsList: List<News>
     ) : ScreenStates.Domain
 
-    data class UIState(val title: String) : ScreenStates.UI
+    data class UIState(
+        val title: String,
+        val newsList: List<News>
+    ) : ScreenStates.UI
 
 }

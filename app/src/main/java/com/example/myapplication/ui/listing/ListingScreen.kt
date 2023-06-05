@@ -27,6 +27,6 @@ class ListingScreen (title: String) :
     }
 
     override fun bindScreen(uiState: ListingScreenContract.UIState, payload: ScreenStates.UIPayload?) {
-        view.findViewById<TextView>(R.id.textView).text = uiState.title
+        view.findViewById<TextView>(R.id.textView).text = uiState.newsList.toString()
     }
 }
