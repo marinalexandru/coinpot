@@ -56,6 +56,24 @@ class NewsRepositoryImpl @Inject constructor(
                         slug = "ethereum"
                     )
                 )
+            ),
+            News(
+                cover = "https://academy-public.coinmarketcap.com/optimized-uploads/0aec0502868046419ceace229f92601f.gif",
+                createdAt = Date(),
+                releasedAt = Date(),
+                title = "Article Title 2",
+                subtitle = "Article Subtitle",
+                type = "alexandria",
+                sourceName = "Connor Sephton",
+                sourceUrl = "https://coinmarketcap.com/alexandria/article/coinmarketcap-news-august-9-u-s-comes-for-tornado-cash",
+                assets = listOf(
+                    NewsAsset(
+                        id = 1027,
+                        name = "Ethereum",
+                        symbol = "ETH",
+                        slug = "ethereum"
+                    )
+                )
             )
         )
     }

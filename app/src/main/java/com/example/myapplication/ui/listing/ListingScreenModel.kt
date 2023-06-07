@@ -10,13 +10,12 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 internal class ListingScreenModel @Inject constructor(
-    stateMapper: StateMapper<ListingScreenContract.DomainState, ListingScreenContract.UIState>,
+    private val stateMapper: StateMapper<ListingScreenContract.DomainState, ListingScreenContract.UIState>,
     inputData: ListingScreenContract.InputData,
     private val newsRepository: NewsRepository
 ) : BaseScreenModel<ListingScreenContract.DomainState, ListingScreenContract.UIState, IOData.EmptyOutput>(
     stateMapper
-),
-    ListingScreenContract.ScreenModelApi {
+), ListingScreenContract.ScreenModelApi {
 
     override val initialState = ListingScreenContract.DomainState(inputData.title, emptyList())
 

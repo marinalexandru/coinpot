@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.listing
 
 import com.example.myapplication.data.models.News
+import com.example.myapplication.ui.listing.delegates.NewsBoxItemDelegate
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.ScreenModel
 import com.revolut.kompot.navigable.screen.ScreenStates
@@ -19,7 +20,7 @@ class ListingScreenContract {
 
     data class UIState(
         val title: String,
-        val newsList: List<News>
+        val newsList: List<NewsBoxItemDelegate.NewsBoxItem>
     ) : ScreenStates.UI
 
 }
