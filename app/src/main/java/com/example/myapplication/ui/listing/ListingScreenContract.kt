@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.listing
 
 import com.example.myapplication.data.models.News
+import com.example.myapplication.data.models.TokenMetadata
 import com.example.myapplication.ui.shared.delegates.HorizontalListDelegate
 import com.example.myapplication.ui.shared.delegates.ImageWithTitleAndSubtitleDelegate
 import com.example.myapplication.ui.shared.delegates.SectionTitleDelegate
@@ -17,7 +18,8 @@ class ListingScreenContract {
     data class InputData(val title: String) : IOData.Input
 
     data class DomainState(
-        val newsList: List<News>
+        val newsList: List<News>,
+        val tokenList: List<TokenMetadata>
     ) : ScreenStates.Domain
 
     data class UIState(

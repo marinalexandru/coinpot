@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.listing
 
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ScreenListingBinding
 import com.example.myapplication.di.components.RootFlowComponent
@@ -8,6 +9,10 @@ import com.example.myapplication.ui.shared.delegates.HorizontalListDelegate
 import com.example.myapplication.ui.shared.delegates.ImageWithTitleAndSubtitleDelegate
 import com.example.myapplication.ui.shared.delegates.SectionTitleDelegate
 import com.example.myapplication.ui.shared.delegates.TitleOverImageDelegate
+import com.revolut.decorations.dividers.DelegatesDividerItemDecoration
+import com.revolut.decorations.dividers.delegates.DividerDecorationDelegate
+import com.revolut.decorations.dividers.delegates.lines.LineDividerDecorationDelegate
+import com.revolut.decorations.overlay.DelegatesOverlayItemDecoration
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.BaseScreen
 import com.revolut.kompot.navigable.screen.ScreenStates

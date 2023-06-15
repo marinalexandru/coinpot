@@ -36,12 +36,12 @@ class ListingStateMapper @Inject constructor(
                 listId = context.getString(R.string.crypto_section_title),
                 text = context.getString(R.string.crypto_section_title)
             ),
-            cryptoList = domainState.newsList.map {
+            cryptoList = domainState.tokenList.map {
                 ImageWithTitleAndSubtitleDelegate.Model(
-                    listId = it.sourceUrl, //TODO Replace with database ID
-                    imageUrl = it.cover,
-                    title = it.title,
-                    subtitle = it.subtitle
+                    listId = it.id.toString(), //TODO Replace with database ID
+                    imageUrl = it.logo,
+                    title = it.name,
+                    subtitle = it.description
                 )
             }
         )

@@ -14,7 +14,7 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.20"
+        app:layout_constraintWidth_percent="0.10"
         tools:src="@android:drawable/screen_background_light" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -28,7 +28,9 @@
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_h2"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tvSubtitle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivCover"
         app:layout_constraintTop_toTopOf="@id/ivCover"
         app:layout_constraintVertical_chainStyle="packed"
@@ -46,6 +48,7 @@
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_h3"
         app:layout_constraintBottom_toBottomOf="@id/ivCover"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/ivCover"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         tools:text="Subtitle" />
