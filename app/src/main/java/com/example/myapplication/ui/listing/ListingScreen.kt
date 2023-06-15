@@ -1,11 +1,13 @@
 package com.example.myapplication.ui.listing
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ScreenListingBinding
 import com.example.myapplication.di.components.RootFlowComponent
-import com.example.myapplication.ui.listing.delegates.NewsBoxItemDelegate
+import com.example.myapplication.ui.shared.delegates.HorizontalListDelegate
+import com.example.myapplication.ui.shared.delegates.ImageWithTitleAndSubtitleDelegate
+import com.example.myapplication.ui.shared.delegates.SectionTitleDelegate
+import com.example.myapplication.ui.shared.delegates.TitleOverImageDelegate
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.BaseScreen
 import com.revolut.kompot.navigable.screen.ScreenStates
@@ -37,7 +39,14 @@ class ListingScreen(title: String) :
         RxDiffAdapter(
             async = true,
             delegates = listOf(
-                NewsBoxItemDelegate { model -> onNewsTap(model) }
+                SectionTitleDelegate(),
+                HorizontalListDelegate(
+                    delegate = TitleOverImageDelegate { model -> onTitleOverImageTap(model) },
+                    klass = TitleOverImageDelegate.Model::class.java
+                ),
+                ImageWithTitleAndSubtitleDelegate(
+                    onTapListener = { model -> onImageWithTitleAndSubtitleTap(model) }
+                )
             )
         )
     }
@@ -52,10 +61,21 @@ class ListingScreen(title: String) :
             LinearLayoutManager.VERTICAL,
             false
         )
-        adapter.setItems(uiState.newsList)
+        adapter.setItems(
+            listOf(
+                uiState.newsSectionTitle,
+                uiState.newsHorizontalGallery,
+                uiState.cryptoSectionTitle,
+                *uiState.cryptoList.toTypedArray()
+            )
+        )
     }
 
-    private fun onNewsTap(model: NewsBoxItemDelegate.NewsBoxItem) {
+    private fun onTitleOverImageTap(model: TitleOverImageDelegate.Model) {
+
+    }
+
+    private fun onImageWithTitleAndSubtitleTap(model: ImageWithTitleAndSubtitleDelegate.Model) {
 
     }
 }

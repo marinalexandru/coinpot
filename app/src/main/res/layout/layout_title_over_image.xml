@@ -23,8 +23,9 @@
         android:padding="@dimen/dp_8"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
         android:textColor="@color/white"
+        android:textSize="@dimen/text_size_h2"
         app:layout_constraintBottom_toBottomOf="@id/ivCover"
         app:layout_constraintStart_toStartOf="@id/ivCover"
-        tools:text="ASD" />
+        tools:text="Title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
