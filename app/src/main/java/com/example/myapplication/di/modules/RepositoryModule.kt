@@ -2,8 +2,8 @@ package com.example.myapplication.di.modules
 
 import com.example.myapplication.data.repositories.NewsRepository
 import com.example.myapplication.data.repositories.NewsRepositoryImpl
-import com.example.myapplication.data.repositories.TokenMetadataRepository
-import com.example.myapplication.data.repositories.TokenMetadataRepositoryImpl
+import com.example.myapplication.data.repositories.TokenRepository
+import com.example.myapplication.data.repositories.TokenRepositoryImpl
 import dagger.Binds
 import dagger.Module
 
@@ -14,5 +14,5 @@ abstract class RepositoryModule {
     abstract fun bindNewsRepository(repository: NewsRepositoryImpl): NewsRepository
 
     @Binds
-    abstract fun bindTokenMetadataRepository(repository: TokenMetadataRepositoryImpl): TokenMetadataRepository
+    abstract fun bindTokenRepository(repository: TokenRepositoryImpl): TokenRepository
 }

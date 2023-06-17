@@ -1,31 +1,34 @@
 package com.example.myapplication.ui.listing
 
 import com.example.myapplication.data.models.News
-import com.example.myapplication.data.models.TokenMetadata
-import com.example.myapplication.ui.shared.delegates.HorizontalListDelegate
-import com.example.myapplication.ui.shared.delegates.ImageWithTitleAndSubtitleDelegate
-import com.example.myapplication.ui.shared.delegates.SectionTitleDelegate
-import com.example.myapplication.ui.shared.delegates.TitleOverImageDelegate
+import com.example.myapplication.data.models.Token
+import com.example.myapplication.ui.components.delegates.HorizontalListDelegate
+import com.example.myapplication.ui.components.delegates.ImageWithTitleAndSubtitleDelegate
+import com.example.myapplication.ui.components.delegates.TitleH1Delegate
+import com.example.myapplication.ui.components.delegates.TitleAndSubtitleOverImageDelegate
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.ScreenModel
 import com.revolut.kompot.navigable.screen.ScreenStates
 import kotlinx.parcelize.Parcelize
 
 class ListingScreenContract {
-    interface ScreenModelApi : ScreenModel<UIState, IOData.EmptyOutput>
+    interface ScreenModelApi : ScreenModel<UIState, IOData.EmptyOutput> {
+        fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model)
+        fun onImageWithTitleAndSubtitleTap(model: ImageWithTitleAndSubtitleDelegate.Model)
+    }
 
     @Parcelize
     data class InputData(val title: String) : IOData.Input
 
     data class DomainState(
         val newsList: List<News>,
-        val tokenList: List<TokenMetadata>
+        val tokenList: List<Token>
     ) : ScreenStates.Domain
 
     data class UIState(
-        val newsSectionTitle: SectionTitleDelegate.Model,
-        val newsHorizontalGallery: HorizontalListDelegate.Model<TitleOverImageDelegate.Model>,
-        val cryptoSectionTitle: SectionTitleDelegate.Model,
+        val newsTitle: TitleH1Delegate.Model,
+        val newsList: HorizontalListDelegate.Model<TitleAndSubtitleOverImageDelegate.Model>,
+        val cryptoTitle: TitleH1Delegate.Model,
         val cryptoList: List<ImageWithTitleAndSubtitleDelegate.Model>
     ) : ScreenStates.UI
 

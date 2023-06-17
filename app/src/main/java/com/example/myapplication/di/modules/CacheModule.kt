@@ -2,8 +2,8 @@ package com.example.myapplication.di.modules
 
 import com.example.myapplication.data.memorycache.NewsMemoryCache
 import com.example.myapplication.data.memorycache.NewsMemoryCacheImpl
-import com.example.myapplication.data.memorycache.TokenMetadataMemoryCache
-import com.example.myapplication.data.memorycache.TokenMetadataMemoryCacheImpl
+import com.example.myapplication.data.memorycache.TokenMemoryCache
+import com.example.myapplication.data.memorycache.TokenMemoryCacheImpl
 import dagger.Binds
 import dagger.Module
 
@@ -14,6 +14,6 @@ abstract class CacheModule {
     abstract fun bindNewsMemoryCache(cache: NewsMemoryCacheImpl): NewsMemoryCache
 
     @Binds
-    abstract fun bindTokenMetadataMemoryCache(cache: TokenMetadataMemoryCacheImpl): TokenMetadataMemoryCache
+    abstract fun bindTokenMemoryCache(cache: TokenMemoryCacheImpl): TokenMemoryCache
 
 }

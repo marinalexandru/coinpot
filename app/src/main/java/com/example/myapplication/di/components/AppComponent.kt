@@ -5,11 +5,12 @@ import android.content.Context
 import com.example.myapplication.di.modules.AppModule
 import com.example.myapplication.di.modules.CacheModule
 import com.example.myapplication.di.modules.RepositoryModule
+import com.example.myapplication.di.modules.ServiceModule
 import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [RepositoryModule::class, CacheModule::class, AppModule::class])
+@Component(modules = [RepositoryModule::class, CacheModule::class, AppModule::class, ServiceModule::class])
 interface AppComponent {
 
     val rootFlowComponent: RootFlowComponent.Builder

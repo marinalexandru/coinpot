@@ -3,7 +3,6 @@ package com.example.myapplication.data.repositories
 import com.example.myapplication.data.memorycache.NewsMemoryCache
 import com.example.myapplication.data.models.News
 import io.reactivex.Observable
-import com.example.myapplication.data.models.NewsAsset
 import com.revolut.rxdata.core.Data
 import com.revolut.rxdata.dod.DataObservableDelegate
 import io.reactivex.Single
@@ -14,7 +13,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val newsMemoryCache: NewsMemoryCache
 ) : NewsRepository {
 
-    private val newsDod: DataObservableDelegate<Any, List<News>> = DataObservableDelegate(
+    private val newsDod: DataObservableDelegate<Any, List<News>> = DataObservableDelegate<Any, List<News>>(
         fromNetwork = {
             Single.just(getNews())
         },
@@ -40,77 +39,39 @@ class NewsRepositoryImpl @Inject constructor(
     private fun getNews(): List<News> {
         return listOf(
             News(
-                cover = "https://academy-public.coinmarketcap.com/optimized-uploads/0aec0502868046419ceace229f92601f.gif",
+                id = "1",
+                cover = "https://academy-public.coinmarketcap.com/srd-optimized-uploads/76166a01f3f344088ca6c4c71649aa98.jpeg",
                 createdAt = Date(),
                 releasedAt = Date(),
-                title = "Article Title",
-                subtitle = "Article Subtitle",
+                title = "What is Halving?",
+                subtitle = "Halving is the event where the supply of new BTC entering the market is programmatically halved. This is a built-in feature of Bitcoin's protocol that occurs every 210,000 blocks, or roughly every four years.",
                 type = "alexandria",
                 sourceName = "Connor Sephton",
-                sourceUrl = "https://coinmarketcap.com/alexandria/article/coinmarketcap-news-august-9-u-s-comes-for-tornado-cash",
-                assets = listOf(
-                    NewsAsset(
-                        id = 1027,
-                        name = "Ethereum",
-                        symbol = "ETH",
-                        slug = "ethereum"
-                    )
-                )
+                sourceUrl = "https://coinmarketcap.com/community/articles/648e18f0e186a85d04cb3ace/",
+
             ),
             News(
-                cover = "https://academy-public.coinmarketcap.com/optimized-uploads/0aec0502868046419ceace229f92601f.gif",
+                id = "2",
+                cover = "https://academy-public.coinmarketcap.com/srd-optimized-uploads/325813f7a9634aedbdb0a17e808b40b3.jpeg",
                 createdAt = Date(),
                 releasedAt = Date(),
-                title = "Article Title 2",
-                subtitle = "Article Subtitle",
+                title = "Optimism Network Shows Signs of Hope Amidst Market Challenges",
+                subtitle = "Recent updates and developments on the Optimism network, shared via their official Twitter account, have stirred positive sentiments within the community. The integration of creative platform manifold.xyz into the Optimism platform is seen as a positive development for NFT creators.",
                 type = "alexandria",
                 sourceName = "Connor Sephton",
-                sourceUrl = "https://coinmarketcap.com/alexandria/article/coinmarketcap-news-august-9-u-s-comes-for-tornado-cash",
-                assets = listOf(
-                    NewsAsset(
-                        id = 1027,
-                        name = "Ethereum",
-                        symbol = "ETH",
-                        slug = "ethereum"
-                    )
-                )
+                sourceUrl = "https://coinmarketcap.com/community/articles/648e0e64e215c15476fdedc3/",
             ),
             News(
-                cover = "https://academy-public.coinmarketcap.com/optimized-uploads/0aec0502868046419ceace229f92601f.gif",
+                id = "3",
+                cover = "https://academy-public.coinmarketcap.com/srd-optimized-uploads/bb2a713db8b048cab60e013a655953f6.jpeg",
                 createdAt = Date(),
                 releasedAt = Date(),
-                title = "Article Title 3",
-                subtitle = "Article Subtitle",
+                title = "Polygon Proposes New Ecosystem Council",
+                subtitle = "Polygon, the renowned Ethereum scaling solution, recently proposed a new decentralized governance model aimed at enhancing its network's security, upgradeability, and robustness.",
                 type = "alexandria",
                 sourceName = "Connor Sephton",
-                sourceUrl = "https://coinmarketcap.com/alexandria/article/coinmarketcap-news-august-9-u-s-comes-for-tornado-cash",
-                assets = listOf(
-                    NewsAsset(
-                        id = 1027,
-                        name = "Ethereum",
-                        symbol = "ETH",
-                        slug = "ethereum"
-                    )
-                )
-            ),
-            News(
-                cover = "https://academy-public.coinmarketcap.com/optimized-uploads/0aec0502868046419ceace229f92601f.gif",
-                createdAt = Date(),
-                releasedAt = Date(),
-                title = "Article Title 4",
-                subtitle = "Article Subtitle",
-                type = "alexandria",
-                sourceName = "Connor Sephton",
-                sourceUrl = "https://coinmarketcap.com/alexandria/article/coinmarketcap-news-august-9-u-s-comes-for-tornado-cash",
-                assets = listOf(
-                    NewsAsset(
-                        id = 1027,
-                        name = "Ethereum",
-                        symbol = "ETH",
-                        slug = "ethereum"
-                    )
-                )
-            ),
+                sourceUrl = "https://coinmarketcap.com/community/articles/648e1ff8e215c15476fdeddf/"
+            )
         )
     }
 

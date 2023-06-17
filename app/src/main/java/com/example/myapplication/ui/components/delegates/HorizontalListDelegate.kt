@@ -1,10 +1,11 @@
-package com.example.myapplication.ui.shared.delegates
+package com.example.myapplication.ui.components.delegates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.LayoutHorizontalListBinding
+import com.revolut.decorations.frames.DelegatesFrameItemDecoration
 import com.revolut.kextensions.ContainerRecyclerViewHolder
 import com.revolut.recyclerkit.delegates.BaseRecyclerViewDelegate
 import com.revolut.recyclerkit.delegates.ListItem
@@ -31,6 +32,7 @@ class HorizontalListDelegate<T : ListItem>(
             async = true,
             delegates = listOf(delegate)
         )
+        binding.rvContent.addItemDecoration(DelegatesFrameItemDecoration())
         binding.rvContent.layoutManager = LinearLayoutManager(
             binding.rvContent.context,
             LinearLayoutManager.HORIZONTAL,

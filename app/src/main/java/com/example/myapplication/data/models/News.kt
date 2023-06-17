@@ -3,8 +3,8 @@ package com.example.myapplication.data.models
 import java.util.*
 
 data class News(
+    val id: String,
     val cover: String,
-    val assets: List<NewsAsset>,
     val createdAt: Date,
     val releasedAt: Date,
     val title: String,

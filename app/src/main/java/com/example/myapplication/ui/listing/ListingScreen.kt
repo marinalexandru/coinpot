@@ -1,18 +1,15 @@
 package com.example.myapplication.ui.listing
 
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ScreenListingBinding
 import com.example.myapplication.di.components.RootFlowComponent
-import com.example.myapplication.ui.shared.delegates.HorizontalListDelegate
-import com.example.myapplication.ui.shared.delegates.ImageWithTitleAndSubtitleDelegate
-import com.example.myapplication.ui.shared.delegates.SectionTitleDelegate
-import com.example.myapplication.ui.shared.delegates.TitleOverImageDelegate
-import com.revolut.decorations.dividers.DelegatesDividerItemDecoration
-import com.revolut.decorations.dividers.delegates.DividerDecorationDelegate
-import com.revolut.decorations.dividers.delegates.lines.LineDividerDecorationDelegate
-import com.revolut.decorations.overlay.DelegatesOverlayItemDecoration
+import com.example.myapplication.ui.components.decorators.ItemDecorators
+import com.example.myapplication.ui.components.delegates.HorizontalListDelegate
+import com.example.myapplication.ui.components.delegates.ImageWithTitleAndSubtitleDelegate
+import com.example.myapplication.ui.components.delegates.TitleH1Delegate
+import com.example.myapplication.ui.components.delegates.TitleAndSubtitleOverImageDelegate
+import com.revolut.decorations.frames.DelegatesFrameItemDecoration
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.BaseScreen
 import com.revolut.kompot.navigable.screen.ScreenStates
@@ -44,13 +41,19 @@ class ListingScreen(title: String) :
         RxDiffAdapter(
             async = true,
             delegates = listOf(
-                SectionTitleDelegate(),
+                TitleH1Delegate(
+                    frameDecoration = ItemDecorators.listItemSpacedAllDecorationDelegate
+                ),
                 HorizontalListDelegate(
-                    delegate = TitleOverImageDelegate { model -> onTitleOverImageTap(model) },
-                    klass = TitleOverImageDelegate.Model::class.java
+                    delegate = TitleAndSubtitleOverImageDelegate(
+                        onTapListener = { model -> onTitleOverImageTap(model) },
+                        frameDecoration = ItemDecorators.listItemLeftSpacedDecorationDelegate
+                    ),
+                    klass = TitleAndSubtitleOverImageDelegate.Model::class.java
                 ),
                 ImageWithTitleAndSubtitleDelegate(
-                    onTapListener = { model -> onImageWithTitleAndSubtitleTap(model) }
+                    onTapListener = { model -> onImageWithTitleAndSubtitleTap(model) },
+                    frameDecoration = ItemDecorators.listItemPaddedBottomSpacedAndRoundedDecorationDelegate
                 )
             )
         )
@@ -66,21 +69,24 @@ class ListingScreen(title: String) :
             LinearLayoutManager.VERTICAL,
             false
         )
+
+        rvContent.addItemDecoration(DelegatesFrameItemDecoration())
+
         adapter.setItems(
             listOf(
-                uiState.newsSectionTitle,
-                uiState.newsHorizontalGallery,
-                uiState.cryptoSectionTitle,
+                uiState.newsTitle,
+                uiState.newsList,
+                uiState.cryptoTitle,
                 *uiState.cryptoList.toTypedArray()
             )
         )
     }
 
-    private fun onTitleOverImageTap(model: TitleOverImageDelegate.Model) {
-
+    private fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model) {
+        screenModel.onTitleOverImageTap(model)
     }
 
     private fun onImageWithTitleAndSubtitleTap(model: ImageWithTitleAndSubtitleDelegate.Model) {
-
+        screenModel.onImageWithTitleAndSubtitleTap(model)
     }
 }

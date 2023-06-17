@@ -4,9 +4,9 @@
     android:id="@+id/tvTitle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textStyle="bold"
-    android:textSize="@dimen/text_size_h1"
     android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
     android:textColor="@color/white"
+    android:textSize="@dimen/text_size_h1"
+    android:textStyle="normal"
     tools:background="@color/black"
     tools:text="Title" />

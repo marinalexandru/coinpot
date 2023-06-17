@@ -2,10 +2,10 @@ package com.example.myapplication.ui.listing
 
 import android.content.Context
 import com.example.myapplication.R
-import com.example.myapplication.ui.shared.delegates.HorizontalListDelegate
-import com.example.myapplication.ui.shared.delegates.ImageWithTitleAndSubtitleDelegate
-import com.example.myapplication.ui.shared.delegates.SectionTitleDelegate
-import com.example.myapplication.ui.shared.delegates.TitleOverImageDelegate
+import com.example.myapplication.ui.components.delegates.HorizontalListDelegate
+import com.example.myapplication.ui.components.delegates.ImageWithTitleAndSubtitleDelegate
+import com.example.myapplication.ui.components.delegates.TitleH1Delegate
+import com.example.myapplication.ui.components.delegates.TitleAndSubtitleOverImageDelegate
 import com.revolut.kompot.navigable.screen.StateMapper
 import javax.inject.Inject
 
@@ -16,29 +16,30 @@ class ListingStateMapper @Inject constructor(
     override fun mapState(domainState: ListingScreenContract.DomainState): ListingScreenContract.UIState {
 
         val titleOverImageDelegateModels = domainState.newsList.map {
-            TitleOverImageDelegate.Model(
-                listId = it.sourceUrl, //TODO Replace with database ID
-                text = it.title,
+            TitleAndSubtitleOverImageDelegate.Model(
+                listId = it.id,
+                title = it.title,
+                subtitle = it.subtitle,
                 imageUrl = it.cover
             )
         }
 
         return ListingScreenContract.UIState(
-            newsSectionTitle = SectionTitleDelegate.Model(
+            newsTitle = TitleH1Delegate.Model(
                 listId = context.getString(R.string.news_section_title),
                 text = context.getString(R.string.news_section_title)
             ),
-            newsHorizontalGallery = HorizontalListDelegate.Model(
+            newsList = HorizontalListDelegate.Model(
                 listId = titleOverImageDelegateModels.hashCode().toString(),
                 items = titleOverImageDelegateModels
             ),
-            cryptoSectionTitle = SectionTitleDelegate.Model(
+            cryptoTitle = TitleH1Delegate.Model(
                 listId = context.getString(R.string.crypto_section_title),
                 text = context.getString(R.string.crypto_section_title)
             ),
             cryptoList = domainState.tokenList.map {
                 ImageWithTitleAndSubtitleDelegate.Model(
-                    listId = it.id.toString(), //TODO Replace with database ID
+                    listId = it.id,
                     imageUrl = it.logo,
                     title = it.name,
                     subtitle = it.description

@@ -1,23 +1,20 @@
-package com.example.myapplication.ui.shared.delegates
+package com.example.myapplication.ui.components.delegates
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.myapplication.R
 import com.example.myapplication.databinding.LayoutTitleOverImageBinding
-import com.example.myapplication.ui.shared.loadImage
-import com.revolut.decorations.dividers.DividerDecoratedItem
-import com.revolut.decorations.dividers.delegates.DividerDecorationDelegate
+import com.example.myapplication.ui.components.loadImage
 import com.revolut.decorations.frames.FrameDecoratedItem
 import com.revolut.decorations.frames.delegates.FrameDecorationDelegate
-import com.revolut.decorations.overlay.OverlayDecoratedItem
-import com.revolut.decorations.overlay.delegates.OverlayDecorationDelegate
 import com.revolut.kextensions.ContainerRecyclerViewHolder
 import com.revolut.recyclerkit.delegates.BaseRecyclerViewDelegate
 import com.revolut.recyclerkit.delegates.ListItem
 
-class TitleOverImageDelegate(
+class TitleAndSubtitleOverImageDelegate(
     private val onTapListener: (data: Model) -> Unit,
-) : BaseRecyclerViewDelegate<TitleOverImageDelegate.Model, TitleOverImageDelegate.ViewHolder>(
+    private val frameDecoration: FrameDecorationDelegate? = null,
+) : BaseRecyclerViewDelegate<TitleAndSubtitleOverImageDelegate.Model, TitleAndSubtitleOverImageDelegate.ViewHolder>(
     viewType = R.layout.layout_title_over_image,
     rule = { _, data -> data is Model }
 ) {
@@ -33,27 +30,24 @@ class TitleOverImageDelegate(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, data: Model, pos: Int, payloads: List<Any>) {
-        super.onBindViewHolder(holder, data, pos, payloads)
+        super.onBindViewHolder(holder, data.copy(frameDecoration = frameDecoration), pos, payloads)
         holder.applyData(data)
     }
 
     private fun ViewHolder.applyData(data: Model) {
         itemView.setOnClickListener { onTapListener(data) }
-        binding.tvTitle.text = data.text
+        binding.tvTitle.text = data.title
+        binding.tvSubtitle.text = data.subtitle
         binding.ivCover.loadImage(data.imageUrl)
     }
 
     data class Model(
         override val listId: String,
-        val text: String,
+        val title: String,
+        val subtitle: String,
         val imageUrl: String,
-        override var topDecoration: DividerDecorationDelegate? = null,
-        override var bottomDecoration: DividerDecorationDelegate? = null,
-        override var leftDecoration: DividerDecorationDelegate? = null,
-        override var rightDecoration: DividerDecorationDelegate? = null,
         override var frameDecoration: FrameDecorationDelegate? = null,
-        override var overlayColorDecoration: OverlayDecorationDelegate? = null
-    ) : ListItem, DividerDecoratedItem, FrameDecoratedItem, OverlayDecoratedItem
+    ) : ListItem, FrameDecoratedItem
 
     class ViewHolder(val binding: LayoutTitleOverImageBinding) :
         ContainerRecyclerViewHolder(binding.root)
