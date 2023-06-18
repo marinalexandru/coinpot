@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#C0C0C0</color>
+    <color name="grey.shimmer">#444444</color>
+    <color name="grey.shimmer.dark">#222222</color>
     <color name="black.faded">#99000000</color>
     <color name="white.faded">#05ffffff</color>
 </resources>

@@ -17,19 +17,15 @@ class NewsRepositoryImpl @Inject constructor(
 
     private val newsDod: DataObservableDelegate<Any, List<News>> = DataObservableDelegate(
         fromNetwork = {
-            try {
-                Single.fromObservable(
-                    newsAPIService.getNews().map {
-                        if (it.isSuccessful) {
-                            return@map newsRepositoryMapper.mapResponse(it.body() ?: emptyList())
-                        } else {
-                            emptyList()
-                        }
+            Single.fromObservable(
+                newsAPIService.getNews().map {
+                    if (it.isSuccessful) {
+                        return@map newsRepositoryMapper.mapResponse(it.body() ?: emptyList())
+                    } else {
+                        emptyList()
                     }
-                )
-            } catch (e: Exception) {
-                Single.error(e)
-            }
+                }
+            )
         },
         fromMemory = {
             newsMemoryCache.get()

@@ -7,8 +7,10 @@ import com.example.myapplication.di.components.RootFlowComponent
 import com.example.myapplication.ui.components.decorators.ItemDecorators
 import com.example.myapplication.ui.components.delegates.HorizontalListDelegate
 import com.example.myapplication.ui.components.delegates.ImageWithTitleAndSubtitleDelegate
+import com.example.myapplication.ui.components.delegates.ImageWithTitleAndSubtitleShimmerDelegate
 import com.example.myapplication.ui.components.delegates.TitleH1Delegate
 import com.example.myapplication.ui.components.delegates.TitleAndSubtitleOverImageDelegate
+import com.example.myapplication.ui.components.delegates.TitleAndSubtitleOverImageShimmerDelegate
 import com.revolut.decorations.frames.DelegatesFrameItemDecoration
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.BaseScreen
@@ -45,14 +47,21 @@ class ListingScreen(title: String) :
                     frameDecoration = ItemDecorators.listItemSpacedAllDecorationDelegate
                 ),
                 HorizontalListDelegate(
-                    delegate = TitleAndSubtitleOverImageDelegate(
-                        onTapListener = { model -> onTitleOverImageTap(model) },
-                        frameDecoration = ItemDecorators.listItemLeftSpacedDecorationDelegate
-                    ),
-                    klass = TitleAndSubtitleOverImageDelegate.Model::class.java
+                    delegates = listOf(
+                        TitleAndSubtitleOverImageDelegate(
+                            onTapListener = { model -> onTitleOverImageTap(model) },
+                            frameDecoration = ItemDecorators.listItemLeftSpacedDecorationDelegate
+                        ),
+                        TitleAndSubtitleOverImageShimmerDelegate(
+                            frameDecoration = ItemDecorators.listItemLeftSpacedDecorationDelegate
+                        ),
+                    )
                 ),
                 ImageWithTitleAndSubtitleDelegate(
                     onTapListener = { model -> onImageWithTitleAndSubtitleTap(model) },
+                    frameDecoration = ItemDecorators.listItemPaddedBottomSpacedAndRoundedDecorationDelegate
+                ),
+                ImageWithTitleAndSubtitleShimmerDelegate(
                     frameDecoration = ItemDecorators.listItemPaddedBottomSpacedAndRoundedDecorationDelegate
                 )
             )
@@ -77,7 +86,8 @@ class ListingScreen(title: String) :
                 uiState.newsTitle,
                 uiState.newsList,
                 uiState.cryptoTitle,
-                *uiState.cryptoList.toTypedArray()
+                *uiState.cryptoList.toTypedArray(),
+                *uiState.cryptoListShimmer.toTypedArray()
             )
         )
     }

@@ -25,7 +25,9 @@ internal class ListingScreenModel @Inject constructor(
 
     override val initialState = ListingScreenContract.DomainState(
         newsList = emptyList(),
-        tokenList = emptyList()
+        tokenList = emptyList(),
+        newsListLoading = false,
+        tokenListLoading = false
     )
 
     private var newsDisposable: Disposable? = null
@@ -61,7 +63,10 @@ internal class ListingScreenModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
                 updateState {
-                    this.copy(newsList = data.content ?: emptyList())
+                    this.copy(
+                        newsList = data.content ?: emptyList(),
+                        newsListLoading = data.loading
+                    )
                 }
             }
     }
@@ -72,7 +77,10 @@ internal class ListingScreenModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
                 updateState {
-                    this.copy(tokenList = data.content ?: emptyList())
+                    this.copy(
+                        tokenList = data.content ?: emptyList(),
+                        tokenListLoading = data.loading
+                    )
                 }
             }
     }

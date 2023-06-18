@@ -11,14 +11,12 @@ import com.revolut.recyclerkit.delegates.BaseRecyclerViewDelegate
 import com.revolut.recyclerkit.delegates.ListItem
 import com.revolut.rxdiffadapter.RxDiffAdapter
 
-class HorizontalListDelegate<T : ListItem>(
-    private val delegate: BaseRecyclerViewDelegate<T, *>,
-    private val klass: Class<T>
-) : BaseRecyclerViewDelegate<HorizontalListDelegate.Model<T>, HorizontalListDelegate.ViewHolder>(
+class HorizontalListDelegate(
+    private val delegates: List<BaseRecyclerViewDelegate<out ListItem, out ContainerRecyclerViewHolder>>,
+) : BaseRecyclerViewDelegate<HorizontalListDelegate.Model, HorizontalListDelegate.ViewHolder>(
     viewType = R.layout.layout_horizontal_list,
     rule = { _, data ->
-        data is Model<*> && data.items.requireNoNulls()
-            .all { klass.isAssignableFrom(it.javaClass) }
+        data is Model
     }
 ) {
 
@@ -30,7 +28,7 @@ class HorizontalListDelegate<T : ListItem>(
         )
         binding.rvContent.adapter = RxDiffAdapter(
             async = true,
-            delegates = listOf(delegate)
+            delegates = listOf(*delegates.toTypedArray())
         )
         binding.rvContent.addItemDecoration(DelegatesFrameItemDecoration())
         binding.rvContent.layoutManager = LinearLayoutManager(
@@ -43,7 +41,7 @@ class HorizontalListDelegate<T : ListItem>(
 
     override fun onBindViewHolder(
         holder: ViewHolder,
-        data: Model<T>,
+        data: Model,
         pos: Int,
         payloads: List<Any>
     ) {
@@ -54,9 +52,9 @@ class HorizontalListDelegate<T : ListItem>(
         }
     }
 
-    data class Model<T>(
+    data class Model(
         override val listId: String,
-        val items: List<T>
+        val items: List<ListItem>
     ) : ListItem
 
     class ViewHolder(val binding: LayoutHorizontalListBinding) :

@@ -7,3 +7,5 @@ fun ImageView.loadImage(imageUrl: String) {
     Glide.with(this).load(imageUrl)
         .into(this)
 }
+
+fun emptyString() = ""

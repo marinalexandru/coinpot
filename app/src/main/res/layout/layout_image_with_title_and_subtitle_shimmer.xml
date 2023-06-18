@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/shimmer_view_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:shimmer_auto_start="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:background="@color/black">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCover"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="2dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/circle_grey_shimmer"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.10" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingStart="@dimen/horizontal_item_spacing"
+            android:paddingEnd="@dimen/horizontal_item_spacing"
+            android:textColor="@color/white"
+            android:background="@drawable/rectangle_grey_shimmer_rounded"
+            android:textSize="@dimen/text_size_h2"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivCover"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+             />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingStart="@dimen/horizontal_item_spacing"
+            android:background="@drawable/rectangle_grey_shimmer_rounded_small"
+            android:paddingEnd="@dimen/horizontal_item_spacing"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_h3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivCover"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSubtitleRow2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingStart="@dimen/horizontal_item_spacing"
+            android:background="@drawable/rectangle_grey_shimmer_rounded_small"
+            android:paddingEnd="@dimen/horizontal_item_spacing"
+            android:textColor="@color/grey"
+            android:textSize="@dimen/text_size_h3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivCover"
+            app:layout_constraintTop_toBottomOf="@id/tvSubtitle"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.facebook.shimmer.ShimmerFrameLayout>
