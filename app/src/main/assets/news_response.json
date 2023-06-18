@@ -1,0 +1,29 @@
+[
+  {
+    "id": "1",
+    "cover": "https://academy-public.coinmarketcap.com/srd-optimized-uploads/76166a01f3f344088ca6c4c71649aa98.jpeg",
+    "title": "What is Halving?",
+    "subtitle": "Halving is the event where the supply of new BTC entering the market is programmatically halved. This is a built-in feature of Bitcoin's protocol that occurs every 210,000 blocks, or roughly every four years.",
+    "type": "alexandria",
+    "sourceName": "Connor Sephton",
+    "sourceUrl": "https://coinmarketcap.com/community/articles/648e18f0e186a85d04cb3ace/"
+  },
+  {
+    "id": "2",
+    "cover": "https://academy-public.coinmarketcap.com/srd-optimized-uploads/325813f7a9634aedbdb0a17e808b40b3.jpeg",
+    "title": "Optimism Network Shows Signs of Hope Amidst Market Challenges",
+    "subtitle": "Recent updates and developments on the Optimism network, shared via their official Twitter account, have stirred positive sentiments within the community. The integration of creative platform manifold.xyz into the Optimism platform is seen as a positive development for NFT creators.",
+    "type": "alexandria",
+    "sourceName": "Connor Sephton",
+    "sourceUrl": "https://coinmarketcap.com/community/articles/648e0e64e215c15476fdedc3/"
+  },
+  {
+    "id": "3",
+    "cover": "https://academy-public.coinmarketcap.com/srd-optimized-uploads/bb2a713db8b048cab60e013a655953f6.jpeg",
+    "title": "Polygon Proposes New Ecosystem Council",
+    "subtitle": "Polygon, the renowned Ethereum scaling solution, recently proposed a new decentralized governance model aimed at enhancing its network's security, upgradeability, and robustness.",
+    "type": "alexandria",
+    "sourceName": "Connor Sephton",
+    "sourceUrl": "https://coinmarketcap.com/community/articles/648e1ff8e215c15476fdeddf/"
+  }
+]

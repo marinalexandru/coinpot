@@ -36,6 +36,27 @@ android {
     buildFeatures {
         viewBinding true
     }
+    buildFeatures {
+        buildConfig = true
+    }
+    flavorDimensions "default"
+
+    productFlavors {
+        dev {
+            dimension "default"
+            applicationIdSuffix ".dev"
+            versionNameSuffix "-dev"
+            buildConfigField "String", "BASE_URL", '"https://sandbox-api.coinmarketcap.com/v1/"'
+
+        }
+        prod {
+            dimension "default"
+            applicationIdSuffix ".prod"
+            versionNameSuffix "-prod"
+            buildConfigField "String", "BASE_URL", '"https://api.coinmarketcap.com/v1/"'
+        }
+    }
+
 }
 
 kotlin {
@@ -71,6 +92,16 @@ dependencies {
     implementation 'com.revolut.rxdata:scheduler:1.4'
     implementation "io.reactivex.rxjava2:rxjava:2.2.19"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+
+    // Networking
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.14.0"
+    implementation "com.squareup.moshi:moshi:1.14.0"
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.moshi:moshi-adapters:1.14.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.8.1"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.9.0"
+    implementation "co.infinum:retromock:1.1.0"
 
     // Glide v4
     implementation 'com.github.bumptech.glide:glide:4.14.2'

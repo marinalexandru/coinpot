@@ -37,6 +37,18 @@ internal class ListingScreenModel @Inject constructor(
         subscribeToTokens()
     }
 
+    override fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model) {
+        val news = state.newsList.find { it.id == model.listId } ?: return
+
+        intentDispatchService.openWebPage(news.sourceUrl)
+    }
+
+    override fun onImageWithTitleAndSubtitleTap(model: ImageWithTitleAndSubtitleDelegate.Model) {
+        val token = state.tokenList.find { it.id == model.listId } ?: return
+
+        intentDispatchService.openWebPage(computeTokenUrlFrom(key = token.slug))
+    }
+
     override fun onFinished() {
         super.onFinished()
         unsubscribeFromNews()
@@ -71,18 +83,6 @@ internal class ListingScreenModel @Inject constructor(
 
     private fun unsubscribeFromTokens() {
         tokenDisposable?.dispose()
-    }
-
-    override fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model) {
-        val news = state.newsList.find { it.id == model.listId } ?: return
-
-        intentDispatchService.openWebPage(news.sourceUrl)
-    }
-
-    override fun onImageWithTitleAndSubtitleTap(model: ImageWithTitleAndSubtitleDelegate.Model) {
-        val token = state.tokenList.find { it.id == model.listId } ?: return
-
-        intentDispatchService.openWebPage(computeTokenUrlFrom(key = token.slug))
     }
 
 }
