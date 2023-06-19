@@ -5,6 +5,8 @@ import com.example.myapplication.data.repositories.TokenRepository
 import com.example.myapplication.data.services.IntentDispatchService
 import com.example.myapplication.ui.components.delegates.ImageWithTitleAndSubtitleDelegate
 import com.example.myapplication.ui.components.delegates.TitleAndSubtitleOverImageDelegate
+import com.example.myapplication.ui.state.LoadableState
+import com.example.myapplication.ui.state.LoadableState.Companion.toLoadableState
 import com.example.myapplication.ui.utils.TextUtils.computeTokenUrlFrom
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.BaseScreenModel
@@ -24,10 +26,8 @@ internal class ListingScreenModel @Inject constructor(
 ), ListingScreenContract.ScreenModelApi {
 
     override val initialState = ListingScreenContract.DomainState(
-        newsList = emptyList(),
-        tokenList = emptyList(),
-        newsListLoading = false,
-        tokenListLoading = false
+        news = LoadableState.Loading(),
+        tokens = LoadableState.Loading()
     )
 
     private var newsDisposable: Disposable? = null
@@ -40,13 +40,13 @@ internal class ListingScreenModel @Inject constructor(
     }
 
     override fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model) {
-        val news = state.newsList.find { it.id == model.listId } ?: return
+        val news = state.news.data?.find { it.id == model.listId } ?: return
 
         intentDispatchService.openWebPage(news.sourceUrl)
     }
 
     override fun onImageWithTitleAndSubtitleTap(model: ImageWithTitleAndSubtitleDelegate.Model) {
-        val token = state.tokenList.find { it.id == model.listId } ?: return
+        val token = state.tokens.data?.find { it.id == model.listId } ?: return
 
         intentDispatchService.openWebPage(computeTokenUrlFrom(key = token.slug))
     }
@@ -57,16 +57,20 @@ internal class ListingScreenModel @Inject constructor(
         unsubscribeFromTokens()
     }
 
+    override fun reload() {
+        unsubscribeFromNews()
+        unsubscribeFromTokens()
+        subscribeToNews()
+        subscribeToTokens()
+    }
+
     private fun subscribeToNews() {
         newsDisposable = newsRepository.observeNews()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
                 updateState {
-                    this.copy(
-                        newsList = data.content ?: emptyList(),
-                        newsListLoading = data.loading
-                    )
+                    this.copy(news = data.toLoadableState())
                 }
             }
     }
@@ -77,10 +81,7 @@ internal class ListingScreenModel @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
                 updateState {
-                    this.copy(
-                        tokenList = data.content ?: emptyList(),
-                        tokenListLoading = data.loading
-                    )
+                    this.copy(tokens = data.toLoadableState())
                 }
             }
     }

@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.listing
 
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ScreenListingBinding
@@ -68,18 +69,37 @@ class ListingScreen(title: String) :
         )
     }
 
-    override fun bindScreen(
-        uiState: ListingScreenContract.UIState,
-        payload: ScreenStates.UIPayload?
-    ) = with(binding) {
-        rvContent.adapter = adapter
-        rvContent.layoutManager = LinearLayoutManager(
+    override fun onScreenViewCreated(view: View) {
+        super.onScreenViewCreated(view)
+       configScreen()
+        setControls()
+    }
+
+    private fun configScreen() {
+        binding.rvContent.adapter = adapter
+        binding.rvContent.layoutManager = LinearLayoutManager(
             activity.applicationContext,
             LinearLayoutManager.VERTICAL,
             false
         )
 
-        rvContent.addItemDecoration(DelegatesFrameItemDecoration())
+        binding.rvContent.addItemDecoration(DelegatesFrameItemDecoration())
+    }
+
+    private fun setControls() {
+        binding.srlContent.setOnRefreshListener {
+            screenModel.reload()
+        }
+    }
+
+    override fun bindScreen(
+        uiState: ListingScreenContract.UIState,
+        payload: ScreenStates.UIPayload?
+    ) = with(binding) {
+
+        if(srlContent.isRefreshing) {
+            srlContent.isRefreshing = false
+        }
 
         adapter.setItems(
             listOf(

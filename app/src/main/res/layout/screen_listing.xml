@@ -8,9 +8,16 @@
     app:fitNavigationBar="true"
     app:fitStatusBar="true">
 
-    <com.revolut.rxdiffadapter.AsyncDiffRecyclerView
-        android:id="@+id/rvContent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/srlContent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <com.revolut.rxdiffadapter.AsyncDiffRecyclerView
+            android:id="@+id/rvContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </com.revolut.kompot.view.ControllerContainerFrameLayout>
