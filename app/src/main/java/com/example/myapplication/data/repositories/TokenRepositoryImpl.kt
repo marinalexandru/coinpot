@@ -1,6 +1,7 @@
 package com.example.myapplication.data.repositories
 
 import com.example.myapplication.data.api.TokensAPIService
+import com.example.myapplication.data.database.daos.TokenDao
 import com.example.myapplication.data.memorycache.TokenMemoryCache
 import com.example.myapplication.data.models.Token
 import com.revolut.rxdata.core.Data
@@ -12,7 +13,8 @@ import javax.inject.Inject
 class TokenRepositoryImpl @Inject constructor(
     private val tokenMemoryCache: TokenMemoryCache,
     private val tokensAPIService: TokensAPIService,
-    private val tokenRepositoryMapper: TokenRepositoryMapper
+    private val tokenRepositoryMapper: TokenRepositoryMapper,
+    private val tokenDao: TokenDao
 ) : TokenRepository {
 
     private val tokenDod: DataObservableDelegate<Any, List<Token>> = DataObservableDelegate(
@@ -30,12 +32,20 @@ class TokenRepositoryImpl @Inject constructor(
         fromMemory = {
             tokenMemoryCache.get()
         },
+
         toMemory = { _, tokens ->
             tokenMemoryCache.cache(tokens)
         },
-        fromStorage = { null },
 
-        toStorage = { _, _ -> }
+        fromStorage = {
+            tokenRepositoryMapper.fromEntity(tokenDao.getAll())
+        },
+
+        toStorage = { _, tokens ->
+            val entities = tokenRepositoryMapper.toEntity(tokens)
+            tokenDao.clearAll()
+            tokenDao.insertAll(entities)
+        }
     )
 
     override fun observeTokens(forceReload: Boolean): Observable<Data<List<Token>>> {

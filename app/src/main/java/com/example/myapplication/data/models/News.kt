@@ -1,7 +1,5 @@
 package com.example.myapplication.data.models
 
-import java.util.*
-
 data class News(
     val id: String,
     val cover: String,

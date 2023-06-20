@@ -5,5 +5,5 @@ import com.revolut.rxdata.core.Data
 import io.reactivex.Observable
 
 interface NewsRepository {
-    fun observeNews(forceReload: Boolean = true): Observable<Data<List<News>>>
+    fun observeNews(forceReload: Boolean = false): Observable<Data<List<News>>>
 }

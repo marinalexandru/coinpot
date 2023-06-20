@@ -1,6 +1,7 @@
 package com.example.myapplication.data.repositories
 
 import com.example.myapplication.data.api.NewsAPIService
+import com.example.myapplication.data.database.daos.NewsDao
 import com.example.myapplication.data.memorycache.NewsMemoryCache
 import com.example.myapplication.data.models.News
 import com.revolut.rxdata.core.Data
@@ -12,7 +13,8 @@ import javax.inject.Inject
 class NewsRepositoryImpl @Inject constructor(
     private val newsMemoryCache: NewsMemoryCache,
     private val newsAPIService: NewsAPIService,
-    private val newsRepositoryMapper: NewsRepositoryMapper
+    private val newsRepositoryMapper: NewsRepositoryMapper,
+    private val newsDao: NewsDao
 ) : NewsRepository {
 
     private val newsDod: DataObservableDelegate<Any, List<News>> = DataObservableDelegate(
@@ -33,8 +35,14 @@ class NewsRepositoryImpl @Inject constructor(
         toMemory = { _, news ->
             newsMemoryCache.cache(news)
         },
-        fromStorage = { null },
-        toStorage = { _, _ -> }
+        fromStorage = {
+            newsRepositoryMapper.fromEntity(newsDao.getAll())
+        },
+        toStorage = { _, news ->
+            val entities = newsRepositoryMapper.toEntity(news)
+            newsDao.clearAll()
+            newsDao.insertAll(entities)
+        }
     )
 
     override fun observeNews(forceReload: Boolean): Observable<Data<List<News>>> {

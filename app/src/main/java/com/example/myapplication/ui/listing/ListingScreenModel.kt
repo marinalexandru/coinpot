@@ -39,6 +39,12 @@ internal class ListingScreenModel @Inject constructor(
         subscribeToTokens()
     }
 
+    override fun onFinished() {
+        super.onFinished()
+        unsubscribeFromNews()
+        unsubscribeFromTokens()
+    }
+
     override fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model) {
         val news = state.news.data?.find { it.id == model.listId } ?: return
 
@@ -51,21 +57,15 @@ internal class ListingScreenModel @Inject constructor(
         intentDispatchService.openWebPage(computeTokenUrlFrom(key = token.slug))
     }
 
-    override fun onFinished() {
-        super.onFinished()
-        unsubscribeFromNews()
-        unsubscribeFromTokens()
-    }
-
     override fun reload() {
         unsubscribeFromNews()
         unsubscribeFromTokens()
-        subscribeToNews()
-        subscribeToTokens()
+        subscribeToNews(forceReload = true)
+        subscribeToTokens(forceReload = true)
     }
 
-    private fun subscribeToNews() {
-        newsDisposable = newsRepository.observeNews()
+    private fun subscribeToNews(forceReload: Boolean = false) {
+        newsDisposable = newsRepository.observeNews(forceReload)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
@@ -75,8 +75,8 @@ internal class ListingScreenModel @Inject constructor(
             }
     }
 
-    private fun subscribeToTokens() {
-        tokenDisposable = tokenRepository.observeTokens()
+    private fun subscribeToTokens(forceReload: Boolean = false) {
+        tokenDisposable = tokenRepository.observeTokens(forceReload)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->

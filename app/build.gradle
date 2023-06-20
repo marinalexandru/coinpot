@@ -113,7 +113,12 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 
-    //Revolut test dependencies
+    // Database
+    implementation "androidx.room:room-runtime:2.5.1"
+    annotationProcessor "androidx.room:room-compiler:2.5.1"
+    kapt "androidx.room:room-compiler:2.5.1"
+
+    // Revolut test dependencies
     testImplementation 'com.revolut.kompot:core-test:0.0.2'
     testImplementation 'com.revolut.kompot:coroutines-test:0.0.2'
 }

@@ -4,7 +4,9 @@ import android.app.Application
 import android.content.Context
 import com.example.myapplication.di.modules.AppModule
 import com.example.myapplication.di.modules.CacheModule
+import com.example.myapplication.di.modules.DatabaseModule
 import com.example.myapplication.di.modules.NetworkingModule
+import com.example.myapplication.di.modules.RepositoryMapperModule
 import com.example.myapplication.di.modules.RepositoryModule
 import com.example.myapplication.di.modules.ServiceModule
 import dagger.Component
@@ -14,10 +16,12 @@ import javax.inject.Singleton
 @Component(
     modules = [
         RepositoryModule::class,
+        RepositoryMapperModule::class,
         CacheModule::class,
         AppModule::class,
         ServiceModule::class,
-        NetworkingModule::class
+        NetworkingModule::class,
+        DatabaseModule::class,
     ]
 )
 interface AppComponent {
