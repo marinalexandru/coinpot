@@ -6,6 +6,7 @@ import com.example.myapplication.data.memorycache.TokenMemoryCache
 import com.example.myapplication.data.models.Token
 import com.revolut.rxdata.core.Data
 import com.revolut.rxdata.dod.DataObservableDelegate
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -38,7 +39,8 @@ class TokenRepositoryImpl @Inject constructor(
         },
 
         fromStorage = {
-            tokenRepositoryMapper.fromEntity(tokenDao.getAll())
+            val entities = tokenDao.getAll()
+            tokenRepositoryMapper.fromEntity(entities)
         },
 
         toStorage = { _, tokens ->
@@ -48,8 +50,14 @@ class TokenRepositoryImpl @Inject constructor(
         }
     )
 
-    override fun observeTokens(forceReload: Boolean): Observable<Data<List<Token>>> {
+    override fun observe(forceReload: Boolean): Observable<Data<List<Token>>> {
         return tokenDod.observe(Unit, forceReload = forceReload)
+    }
+
+    override fun reload(): Completable {
+        tokenDod.updateMemory(Unit, emptyList())
+        tokenDod.notifyFromMemory(loading = true, where = { true })
+        return tokenDod.reload(Unit)
     }
 
 }

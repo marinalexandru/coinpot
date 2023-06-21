@@ -6,6 +6,7 @@ import com.example.myapplication.data.memorycache.NewsMemoryCache
 import com.example.myapplication.data.models.News
 import com.revolut.rxdata.core.Data
 import com.revolut.rxdata.dod.DataObservableDelegate
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import javax.inject.Inject
@@ -45,8 +46,14 @@ class NewsRepositoryImpl @Inject constructor(
         }
     )
 
-    override fun observeNews(forceReload: Boolean): Observable<Data<List<News>>> {
+    override fun observe(forceReload: Boolean): Observable<Data<List<News>>> {
         return newsDod.observe(Unit, forceReload = forceReload)
+    }
+
+    override fun reload(): Completable {
+        newsDod.updateMemory(Unit, emptyList())
+        newsDod.notifyFromMemory(loading = true, where = { true })
+        return newsDod.reload(Unit)
     }
 
 }

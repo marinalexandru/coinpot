@@ -11,8 +11,9 @@ import com.example.myapplication.ui.utils.TextUtils.computeTokenUrlFrom
 import com.revolut.kompot.common.IOData
 import com.revolut.kompot.navigable.screen.BaseScreenModel
 import com.revolut.kompot.navigable.screen.StateMapper
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
@@ -30,19 +31,12 @@ internal class ListingScreenModel @Inject constructor(
         tokens = LoadableState.Loading()
     )
 
-    private var newsDisposable: Disposable? = null
-    private var tokenDisposable: Disposable? = null
+    private val disposables = CompositeDisposable()
 
     override fun onCreated() {
         super.onCreated()
         subscribeToNews()
         subscribeToTokens()
-    }
-
-    override fun onFinished() {
-        super.onFinished()
-        unsubscribeFromNews()
-        unsubscribeFromTokens()
     }
 
     override fun onTitleOverImageTap(model: TitleAndSubtitleOverImageDelegate.Model) {
@@ -58,14 +52,21 @@ internal class ListingScreenModel @Inject constructor(
     }
 
     override fun reload() {
-        unsubscribeFromNews()
-        unsubscribeFromTokens()
-        subscribeToNews(forceReload = true)
-        subscribeToTokens(forceReload = true)
+        val tokenReloadCompletable = tokenRepository.reload()
+            .subscribeOn(Schedulers.io())
+
+        val newsReloadCompletable = newsRepository.reload()
+            .subscribeOn(Schedulers.io())
+
+        val disposable = Completable.concat(listOf(tokenReloadCompletable, newsReloadCompletable))
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
+
+        disposables.add(disposable)
     }
 
-    private fun subscribeToNews(forceReload: Boolean = false) {
-        newsDisposable = newsRepository.observeNews(forceReload)
+    private fun subscribeToNews() {
+        val disposable = newsRepository.observe(forceReload = true)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
@@ -73,10 +74,11 @@ internal class ListingScreenModel @Inject constructor(
                     this.copy(news = data.toLoadableState())
                 }
             }
+        disposables.add(disposable)
     }
 
-    private fun subscribeToTokens(forceReload: Boolean = false) {
-        tokenDisposable = tokenRepository.observeTokens(forceReload)
+    private fun subscribeToTokens() {
+        val disposable = tokenRepository.observe(forceReload = true)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { data ->
@@ -84,14 +86,12 @@ internal class ListingScreenModel @Inject constructor(
                     this.copy(tokens = data.toLoadableState())
                 }
             }
+        disposables.add(disposable)
     }
 
-    private fun unsubscribeFromNews() {
-        newsDisposable?.dispose()
-    }
-
-    private fun unsubscribeFromTokens() {
-        tokenDisposable?.dispose()
+    override fun onFinished() {
+        super.onFinished()
+        disposables.dispose()
     }
 
 }
